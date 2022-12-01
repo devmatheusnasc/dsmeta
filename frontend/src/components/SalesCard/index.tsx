@@ -17,10 +17,15 @@ function SalesCard() {
   const [sales, setsales] = useState<Sale[]>([]);
 
   useEffect(() => {
-    axios.get(`${BASE_URL}/sales`).then((response) => {
-      setsales(response.data.content);
-    });
-  }, []);
+    const dMin = minDate.toISOString().slice(0, 10);
+    const dMax = maxDate.toISOString().slice(0, 10);
+
+    axios
+      .get(`${BASE_URL}/sales?minDate=${dMin}&maxDate=${dMax}`)
+      .then((response) => {
+        setsales(response.data.content);
+      });
+  }, [minDate, maxDate]);
 
   return (
     <div className="dsmeta-card">
@@ -62,7 +67,9 @@ function SalesCard() {
               return (
                 <tr key={item.id}>
                   <td className="show992">{item.id}</td>
-                  <td className="show576">{new Date(item.date).toLocaleDateString()}</td>
+                  <td className="show576">
+                    {new Date(item.date).toLocaleDateString()}
+                  </td>
                   <td>{item.sellerName}</td>
                   <td className="show992">{item.visited}</td>
                   <td className="show992">{item.deals}</td>
@@ -73,7 +80,7 @@ function SalesCard() {
                     </div>
                   </td>
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
