@@ -108,4 +108,18 @@ public class Sale implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(getSellerName());
+		builder.append(", Vendas: ");
+		builder.append(getDeals());
+		builder.append(", Valor da venda: ");
+		builder.append(getAmount());
+		builder.append(", Instante: ");
+		builder.append(getDate());
+		builder.append("\n");
+		return builder.toString();
+	}
+
 }
